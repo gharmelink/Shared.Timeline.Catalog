@@ -1,0 +1,20 @@
+﻿<CustomUIModelMetadata 
+    xmlns="bb_appfx_customuimodelmetadata"
+    xmlns:c="bb_appfx_commontypes"
+    ID="31c12a45-08a4-41e9-a4cb-fb75aa2020c1"
+    Name="Constituent Timeline"
+    Description="Constituent Timeline Project (for sharing)"
+    Author="UGA Development"
+    FormHeader="Constituent Timeline">
+	<FormMetaData xmlns="bb_appfx_commontypes">
+		<FormFields>
+			<FormField FieldID="CONTEXTID" Caption="Context ID" DataType="String" MaxLength="40" />
+		</FormFields>
+        <WebUIComponent>
+            <UIModel AssemblyName="Shared.Timeline.Catalog.dll" ClassName="Shared.Timeline.Catalog.ConstituentTimelineUIModel" />
+            <WebUI>
+                <DefaultWebUI />
+            </WebUI>
+        </WebUIComponent>		
+	</FormMetaData>	
+</CustomUIModelMetadata>
