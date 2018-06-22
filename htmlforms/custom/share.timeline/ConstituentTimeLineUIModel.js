@@ -164,12 +164,14 @@ function hideBlankField(str) {
 
 (function (container, modelInstanceId) {
 
-	var util = BBUI.forms.Utility
-		var actionhost = BBUI.pages.ActionHost;
+	var util = BBUI.forms.Utility;
+	//grab the context ID
 	CONTEXTID = container.getFieldByName("CONTEXTID", modelInstanceId).value;
+	//set default datalist IDs
 	var recognitionDatalistID = '1E25E348-03FF-4341-8B46-0C55567084D9'; // '5495190C-4967-4328-9764-B91F4C246A47';
 	var interactionDatalistID = 'CBBAC8AF-4F55-4A6E-B94C-628CF44D240D'; //'73B616BD-2247-4803-87FE-0804F9D48654';
 	var communicationDatalistID = '671782cc-080f-48ba-b877-c0cd9f149f8a';
+	//grab the database name
 	var databaseName = container.svc.databaseName;
 
 	//filter popup
@@ -196,7 +198,8 @@ function hideBlankField(str) {
 			}
 		}
 	});
-
+	
+	//setup tree to be used for filter
 	var tree1 = $('#' + util.getMappedElId(modelInstanceId, "treediv") + " div").tree({
 			onCheck: {
 				node: 'expand'
@@ -380,7 +383,7 @@ function hideBlankField(str) {
 							return x.communicationtype;
 						});
 
-					//default options for
+					//default options for timeline
 					var options = {
 						start: new Date(2016, 0, 1),
 						end: new Date(2019, 0, 1)
@@ -412,7 +415,8 @@ function hideBlankField(str) {
 						move(-0.3, timeline);
 					};
 
-					//add nodes and click actions
+					//add nodes and click actions for the tree
+					
 					//add interactions
 					$.each(interActionTypes, function (index, value) {
 						tree1.tree('addNode', {
