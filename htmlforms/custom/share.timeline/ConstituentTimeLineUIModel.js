@@ -218,7 +218,7 @@ function hideBlankField(str) {
 			d["ID"]
 		];
 	})
-	.get(function (error, interactions) {
+	.get(function (error, recognitionrows) {
 		//interactions
 		d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName=" + databaseName + "&dataListID=" + interactionDatalistID + "&ContextRecordID=" + CONTEXTID + "&format=csv&DATEFILTER=0"))
 		.row(function (d) {
@@ -263,16 +263,16 @@ function hideBlankField(str) {
 					var communicationitems = new vis.DataSet();
 
 					var recognitions = [];
-					$.each(interactions, function (index, value) {
-						$content = "<a href='./webshellpage.aspx?databasename=" + databaseName + "#pageType=p&pageId=e5bd9d8b-c268-48cc-a312-e9a832b39566&recordId=" + interactions[index][5] + "' style='font-weight:bold;'>" + interactions[index][2] + " " + interactions[index][1] + "</a><br>" + interactions[index][0] + "<br>" + interactions[index][3] + "<br>" + interactions[index][4] + " Recognition";
+					$.each(recognitionrows, function (index, value) {
+						$content = "<a href='./webshellpage.aspx?databasename=" + databaseName + "#pageType=p&pageId=e5bd9d8b-c268-48cc-a312-e9a832b39566&recordId=" + recognitionrows[index][5] + "' style='font-weight:bold;'>" + recognitionrows[index][2] + " " + recognitionrows[index][1] + "</a><br>" + recognitionrows[index][0] + "<br>" + recognitionrows[index][3] + "<br>" + recognitionrows[index][4] + " Recognition";
 						recognitions.push({
-							id: interactions[index][5],
+							id: recognitionrows[index][5],
 							content: $content,
-							start: interactions[index][0],
+							start: recognitionrows[index][0],
 							group: 0,
 							className: "recognition",
-							recognitiontype: interactions[index][4],
-							application: interactions[index][2]
+							recognitiontype: recognitionrows[index][4],
+							application: recognitionrows[index][2]
 						});
 					});
 
