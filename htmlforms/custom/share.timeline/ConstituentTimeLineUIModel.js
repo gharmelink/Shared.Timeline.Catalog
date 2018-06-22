@@ -167,6 +167,7 @@ function hideBlankField(str) {
 	var recognitionDatalistID = '1E25E348-03FF-4341-8B46-0C55567084D9';// '5495190C-4967-4328-9764-B91F4C246A47';
 	var interactionDatalistID = 'CBBAC8AF-4F55-4A6E-B94C-628CF44D240D';//'73B616BD-2247-4803-87FE-0804F9D48654';
 	var communicationDatalistID = '671782cc-080f-48ba-b877-c0cd9f149f8a';
+	var databaseName = container.svc.databaseName;
 	
 	//filter popup 
 	$("#" + util.getMappedElId(modelInstanceId, "filter")).click(function () {
@@ -203,7 +204,7 @@ function hideBlankField(str) {
 		});
 			
 	//recognitions		
-	d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName=BBInfinity&dataListID="+recognitionDatalistID+"&ContextRecordID=" + CONTEXTID + "&format=csv&DATEFILTER=0"))
+	d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName="+databaseName+"&dataListID="+recognitionDatalistID+"&ContextRecordID=" + CONTEXTID + "&format=csv&DATEFILTER=0"))
 	.row(function(d) {return [
 			convDate(d.DATE), 
 			d["AMOUNT"],
@@ -214,7 +215,7 @@ function hideBlankField(str) {
 			]; })
 	.get(function(error, rows) {			
 		//interactions
-		 d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName=BBInfinity&dataListID="+interactionDatalistID+"&ContextRecordID=" + CONTEXTID + "&format=csv&DATEFILTER=0"))
+		 d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName="+databaseName+"&dataListID="+interactionDatalistID+"&ContextRecordID=" + CONTEXTID + "&format=csv&DATEFILTER=0"))
 			.row(function(d) {return [
 					convDate(d.DATE), 					
 					d["CATEGORY"],
@@ -227,7 +228,7 @@ function hideBlankField(str) {
 					]; })
 			.get(function(error, interactions) {									
 				//communications
-				d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName=BBInfinity&dataListID="+communicationDatalistID+"&ContextRecordID=" + CONTEXTID + "&format=csv&DATEFILTER=10"))
+				d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName="+databaseName+"&dataListID="+communicationDatalistID+"&ContextRecordID=" + CONTEXTID + "&format=csv&DATEFILTER=10"))
 					.row(function(d) {return [
 							convDate(d.DATESENT), 												
 							d["CHANNEL"],
@@ -254,14 +255,14 @@ function hideBlankField(str) {
 							
 							var recognitions =[];													
 							$.each(rows, function( index, value ) {
-								$content="<a href='./webshellpage.aspx?databasename=BBInfinity#pageType=p&pageId=e5bd9d8b-c268-48cc-a312-e9a832b39566&recordId=" + rows[index][5] + "' style='font-weight:bold;'>"+rows[index][2]+" "+rows[index][1]+"</a><br>"+rows[index][0]+"<br>"+rows[index][3]+"<br>"+rows[index][4]+" Recognition";
+								$content="<a href='./webshellpage.aspx?databasename="+databaseName+"#pageType=p&pageId=e5bd9d8b-c268-48cc-a312-e9a832b39566&recordId=" + rows[index][5] + "' style='font-weight:bold;'>"+rows[index][2]+" "+rows[index][1]+"</a><br>"+rows[index][0]+"<br>"+rows[index][3]+"<br>"+rows[index][4]+" Recognition";
 								recognitions.push({id: rows[index][5] , content: $content, start: rows[index][0], group: 0, className:"recognition",recognitiontype: rows[index][4],application: rows[index][2]});						
 							});														
 							
 							var ints =[];			
 							$.each(interactions, function( index, value ) {
 								if(interactions[index][0]!=""){
-									$content="<a href='./webshellpage.aspx?databasename=BBInfinity#pageType=p&pageId=c7fb41d2-840f-4c19-a4fc-3f8ce7ece1aa&recordId=" + interactions[index][5]+"' style='font-weight:bold;'>"+interactions[index][3]+" </a><br>"+interactions[index][0] + "<br>Type: " +interactions[index][7]+ "<br>" + interactionCategory(interactions[index][1],interactions[index][6])+"Status: "+interactions[index][2];
+									$content="<a href='./webshellpage.aspx?databasename="+databaseName+"#pageType=p&pageId=c7fb41d2-840f-4c19-a4fc-3f8ce7ece1aa&recordId=" + interactions[index][5]+"' style='font-weight:bold;'>"+interactions[index][3]+" </a><br>"+interactions[index][0] + "<br>Type: " +interactions[index][7]+ "<br>" + interactionCategory(interactions[index][1],interactions[index][6])+"Status: "+interactions[index][2];
 									ints.push({id: interactions[index][5], content: $content, start: interactions[index][0],interactiontype: interactions[index][7], group: 1, className:"interaction"});				
 								}
 							});							
@@ -272,7 +273,7 @@ function hideBlankField(str) {
 									switch(communications[index][3]) {
 										case "Appeal Mailing": 
 											if(communications[index][6]!=10) { //NOT BBIS
-												$content="<a href='./webshellpage.aspx?databasename=BBInfinity#pageType=p&pageId=bc7374ef-1061-4e58-bc83-19c513a893cb&recordId=" + communications[index][4]+"' style='font-weight:bold;'>"+communications[index][3]+" </a><br>"+communications[index][0] + "<br>"+communications[index][2] + "<br>" +communications[index][1];							
+												$content="<a href='./webshellpage.aspx?databasename="+databaseName+"#pageType=p&pageId=bc7374ef-1061-4e58-bc83-19c513a893cb&recordId=" + communications[index][4]+"' style='font-weight:bold;'>"+communications[index][3]+" </a><br>"+communications[index][0] + "<br>"+communications[index][2] + "<br>" +communications[index][1];							
 											}
 											else {
 												$content=communications[index][3]+" (BBIS)<br>"+communications[index][0] + "<br>"+communications[index][2] + "<br>" +communications[index][1];							
@@ -280,19 +281,19 @@ function hideBlankField(str) {
 											comms.push({id: communications[index][5], content: $content, start: communications[index][0], group: 3, className:"communication",communicationtype:communications[index][3]});				
 											break;
 										case "Receipt": 
-											$content="<a href='./webshellpage.aspx?databasename=BBInfinity#pageType=p&pageId=387f861b-6c03-486c-9ff5-9cc5bb7a5275&recordId=" + communications[index][4]+"' style='font-weight:bold;'>"+communications[index][3]+" </a><br>"+communications[index][0] + "<br>"+communications[index][2] + "<br>" +communications[index][1];							
+											$content="<a href='./webshellpage.aspx?databasename="+databaseName+"#pageType=p&pageId=387f861b-6c03-486c-9ff5-9cc5bb7a5275&recordId=" + communications[index][4]+"' style='font-weight:bold;'>"+communications[index][3]+" </a><br>"+communications[index][0] + "<br>"+communications[index][2] + "<br>" +communications[index][1];							
 											comms.push({id: communications[index][5], content: $content, start: communications[index][0], group: 3, className:"communication",communicationtype:communications[index][3]});				
 											break;
 										case "Event Invitation": 
-											$content="<a href='./webshellpage.aspx?databasename=BBInfinity#pageType=p&pageId=9cd4b54a-43df-4ff9-a0a4-1bae7480bc78&recordId=" + communications[index][4]+"' style='font-weight:bold;'>"+communications[index][3]+" </a><br>"+communications[index][0] + "<br>"+communications[index][2] + "<br>" +communications[index][1];							
+											$content="<a href='./webshellpage.aspx?databasename="+databaseName+"#pageType=p&pageId=9cd4b54a-43df-4ff9-a0a4-1bae7480bc78&recordId=" + communications[index][4]+"' style='font-weight:bold;'>"+communications[index][3]+" </a><br>"+communications[index][0] + "<br>"+communications[index][2] + "<br>" +communications[index][1];							
 											comms.push({id: communications[index][5], content: $content, start: communications[index][0], group: 3, className:"communication",communicationtype:communications[index][3]});				
 											break;
 										case "General Correspondence": 
-											$content="<a href='./webshellpage.aspx?databasename=BBInfinity#pageType=p&pageId=97210b2d-c2ff-4ad4-9a98-7f7dba08249a&recordId=" + communications[index][7]+"' style='font-weight:bold;'>"+communications[index][3]+" </a><br>"+communications[index][0] + "<br>"+communications[index][2] + "<br>" +communications[index][1];							
+											$content="<a href='./webshellpage.aspx?databasename="+databaseName+"#pageType=p&pageId=97210b2d-c2ff-4ad4-9a98-7f7dba08249a&recordId=" + communications[index][7]+"' style='font-weight:bold;'>"+communications[index][3]+" </a><br>"+communications[index][0] + "<br>"+communications[index][2] + "<br>" +communications[index][1];							
 											comms.push({id: communications[index][5], content: $content, start: communications[index][0], group: 3, className:"communication",communicationtype:communications[index][3]});				
 											break;
 										case "Acknowledgement": 
-											$content="<a href='./webshellpage.aspx?databasename=BBInfinity#pageType=p&pageId=387f861b-6c03-486c-9ff5-9cc5bb7a5275&tabId=ee723ddc-2644-4dd8-9e34-6302b2fef8c7&recordId=" + communications[index][4]+"' style='font-weight:bold;'>"+communications[index][3]+" </a><br>"+communications[index][0] + "<br>"+communications[index][2] + "<br>" +communications[index][1];							
+											$content="<a href='./webshellpage.aspx?databasename="+databaseName+"#pageType=p&pageId=387f861b-6c03-486c-9ff5-9cc5bb7a5275&tabId=ee723ddc-2644-4dd8-9e34-6302b2fef8c7&recordId=" + communications[index][4]+"' style='font-weight:bold;'>"+communications[index][3]+" </a><br>"+communications[index][0] + "<br>"+communications[index][2] + "<br>" +communications[index][1];							
 											comms.push({id: communications[index][5], content: $content, start: communications[index][0], group: 3, className:"communication",communicationtype:communications[index][3]});				
 											break;
 										default: 
