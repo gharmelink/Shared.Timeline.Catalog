@@ -89,87 +89,14 @@ function hideBlankField(str) {
 	}
 }
 
-//tiny modal
-(function ($) {
-
-	var _defaults = {
-		buttons: ['Ok', 'Cancel'],
-		title: 'Alert',
-		html: '<p>Alert</p>',
-		Ok: $.noop,
-		Cancel: $.noop,
-		onOpen: $.noop,
-		onClose: $.noop,
-		clickOutside: true
-	};
-
-	$.tinyModal = function (opts) {
-
-		var o = $.extend({}, _defaults, opts),
-		$overlay = $('<div class="tinymodal-overlay">').hide(),
-		$modal = $('<div class="tinymodal-window">\
-				<div class="tinymodal-title">' + o.title + '<div class="tinymodal-close">&#215;</div></div>\
-				<div class="tinymodal-content"></div>\
-				<div class="tinymodal-buttons"><div class="inner"></div></div>\
-				</div>').hide(),
-		$el = $(o.html)
-			$children = $el.children();
-
-		$modal.find('.tinymodal-content').append($children);
-
-		if (o.buttons.length) {
-			$modal.find('.inner').append('<button>' + o.buttons.join('</button><button>') + '</button>');
-		}
-
-		function show() {
-			$('body').width($('body').width()).css('overflow', 'hidden');
-			$overlay.fadeIn('fast', function () {
-				$modal.fadeIn('fast', o.onOpen);
-			});
-			$modal.css({
-				marginLeft:  - ($modal.width() / 2) + 'px',
-			});
-		}
-
-		function hide(callback) {
-			$modal.fadeOut('fast', function () {
-				$('body').css({
-					width: 'auto',
-					overflow: 'auto'
-				});
-				$overlay.fadeOut('fast');
-				if (typeof callback == 'function')
-					callback();
-				$el.append($children);
-			});
-		}
-
-		$modal.find('.tinymodal-buttons button, .tinymodal-close').on('click', function (e) {
-			var callback = $(this).text();
-			hide(o[callback]);
-		});
-
-		$modal.find('.tinymodal-close').click(o.onClose);
-		$modal.on('click', function (e) {
-			e.stopPropagation();
-		});
-		if (o.clickOutside)
-			$overlay.on('click', hide);
-		$('body').prepend($overlay.append($modal));
-		show();
-	};
-
-}
-	(jQuery));
-
 (function (container, modelInstanceId) {
 
 	var util = BBUI.forms.Utility;
 	//grab the context ID
 	CONTEXTID = container.getFieldByName("CONTEXTID", modelInstanceId).value;
 	//set default datalist IDs
-	var recognitionDatalistID = '1E25E348-03FF-4341-8B46-0C55567084D9'; // '5495190C-4967-4328-9764-B91F4C246A47';
-	var interactionDatalistID = 'CBBAC8AF-4F55-4A6E-B94C-628CF44D240D'; //'73B616BD-2247-4803-87FE-0804F9D48654';
+	var recognitionDatalistID = '1E25E348-03FF-4341-8B46-0C55567084D9';
+	var interactionDatalistID = 'CBBAC8AF-4F55-4A6E-B94C-628CF44D240D';
 	var communicationDatalistID = '671782cc-080f-48ba-b877-c0cd9f149f8a';
 	//grab the database name
 	var databaseName = container.svc.databaseName;
@@ -210,7 +137,12 @@ function hideBlankField(str) {
 		});
 
 	//recognitions
-	d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName=" + databaseName + "&dataListID=" + recognitionDatalistID + "&ContextRecordID=" + CONTEXTID + "&format=csv&DATEFILTER=0"))
+	d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName=" 
+							+ databaseName + "&dataListID=" 
+							+ recognitionDatalistID 
+							+ "&ContextRecordID=" 
+							+ CONTEXTID 
+							+ "&format=csv&DATEFILTER=0"))
 	.row(function (d) {
 		return [
 			convDate(d.DATE),
@@ -223,7 +155,12 @@ function hideBlankField(str) {
 	})
 	.get(function (error, recognitionrows) {
 		//interactions
-		d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName=" + databaseName + "&dataListID=" + interactionDatalistID + "&ContextRecordID=" + CONTEXTID + "&format=csv&DATEFILTER=0"))
+		d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName=" 
+								+ databaseName + "&dataListID=" 
+								+ interactionDatalistID 
+								+ "&ContextRecordID=" 
+								+ CONTEXTID 
+								+ "&format=csv&DATEFILTER=0"))
 		.row(function (d) {
 			return [
 				convDate(d.DATE),
@@ -238,7 +175,13 @@ function hideBlankField(str) {
 		})
 		.get(function (error, interactions) {
 			//communications
-			d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName=" + databaseName + "&dataListID=" + communicationDatalistID + "&ContextRecordID=" + CONTEXTID + "&format=csv&DATEFILTER=10"))
+			d3.csv(container.fixUrl("/util/DataList.ashx?DatabaseName=" 
+									+ databaseName 
+									+ "&dataListID=" 
+									+ communicationDatalistID 
+									+ "&ContextRecordID=" 
+									+ CONTEXTID 
+									+ "&format=csv&DATEFILTER=10"))
 			.row(function (d) {
 				return [
 					convDate(d.DATESENT),
