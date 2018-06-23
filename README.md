@@ -9,8 +9,10 @@ This project depends on several external js libraries being installed in the Bla
 * [Jquery UI] (https://jqueryui.com/)
 * [Vis.js] (http://visjs.org/)
 * [daredevel's jQuery Tree] (https://github.com/daredevel/jquery-tree)
+* [share-resources bundle] (https://www.dropbox.com/s/gxsoaj58acw0vuh/shared_resources.zip?dl=0)
+  * This is a zip of the shared resources that can be unpacked to htmlforms\custom\shared_resources
 * [Blackbaud SDK] (https://www.blackbaud.com/files/support/guides/infinitydevguide/infsdk-developer-help.htm)
 
 ## Authors
 
-* **Greg Harmelink on behalf of the University of Georgia** - *Initial work* 
+* **Greg Harmelink on behalf of the University of Georgia**
