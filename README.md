@@ -2,9 +2,10 @@
 
 This Blackbaud CRM SDK project creates an integrated timeline visualization of various constituent data using the vis.js library
 
+**I will update this shortly to have some quick start instructions regarding how to deploy it**
 ### Prerequisites
 
-This project depends on several external js libraries being installed in the Blackbaud CRM intall location of /htmlforms/custom/shared_resources
+This project depends on several external js libraries being installed in the Blackbaud CRM install location of /htmlforms/custom/shared_resources
 * [D3] (https://d3js.org/)
 * [Jquery UI] (https://jqueryui.com/)
 * [Vis.js] (http://visjs.org/)
